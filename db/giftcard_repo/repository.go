@@ -10,10 +10,10 @@ import (
 )
 
 type GiftCardRepoImpl struct {
-	db pgxpool.Conn
+	db *pgxpool.Pool
 }
 
-func NewGiftCardRepo(ctx context.Context, db pgxpool.Conn) GiftCardRepo {
+func NewGiftCardRepo(ctx context.Context, db *pgxpool.Pool) GiftCardRepo {
 	common.Must2(db.Exec(ctx, `CREATE TABLE IF NOT EXISTS gift_card(
     id UUID PRIMARY KEY,
     gifter_id UUID NOT NULL,

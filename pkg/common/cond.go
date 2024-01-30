@@ -11,3 +11,10 @@ func Must2(_ any, err error) {
 		panic(err)
 	}
 }
+
+func MustGetVal[T any](val T, err error) T {
+	if err != nil {
+		panic(err)
+	}
+	return val
+}

@@ -3,13 +3,20 @@ package config
 import (
 	"assignment/pkg/common"
 	"bytes"
+	"fmt"
 	"github.com/spf13/viper"
 )
 
 type PostgresConf struct {
-	Host   string
-	Port   int
-	DBName string
+	Host     string
+	Port     int
+	User     string
+	Password string
+	DBName   string
+}
+
+func (p *PostgresConf) GenerateConnectURL() string {
+	return fmt.Sprintf("postgres://%s:%s@%s:%d/%s", p.User, p.Password, p.Host, p.Port, p.DBName)
 }
 
 type ListenConf struct {
@@ -26,6 +33,8 @@ var defaultConf = `
 GiftShopPGXConf:
 	Host: 5.34.202.174
 	Port: 5433
+	User: postgres
+	Password: dummypass
 	DBName: giftshop
 EndpointConf:
 	Host: 0.0.0.0
