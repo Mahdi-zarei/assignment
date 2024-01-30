@@ -31,20 +31,20 @@ type Config struct {
 
 var defaultConf = `
 GiftShopPGXConf:
-	Host: 5.34.202.174
-	Port: 5433
-	User: postgres
-	Password: dummypass
-	DBName: giftshop
+  Host: "5.34.202.174"
+  Port: 5433
+  User: "postgres"
+  Password: "dummypass"
+  DBName: "giftshop"
 EndpointConf:
-	Host: 0.0.0.0
-	Port: 8080
+  Host: "0.0.0.0"
+  Port: 8080
 `
 
 func GetConfig() *Config {
+	viper.SetConfigType("yaml")
 	common.Must1(viper.ReadConfig(bytes.NewReader([]byte(defaultConf))))
 	viper.SetConfigName("conf")
-	viper.SetConfigType("yaml")
 	viper.AddConfigPath("/etc/config")
 	viper.AddConfigPath("")
 

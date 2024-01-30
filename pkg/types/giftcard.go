@@ -22,3 +22,12 @@ type GiftCardData struct {
 	IssueDate    time.Time      `json:"issue_date"`
 	ResponseDate time.Time      `json:"response_date"`
 }
+
+func (g *GiftCardData) Equals(target GiftCardData) bool {
+	return g.ID == target.ID &&
+		g.GifterID == target.GifterID &&
+		g.GifteeID == target.GifteeID &&
+		g.Status == target.Status &&
+		g.IssueDate.UnixMilli() == target.IssueDate.UnixMilli() &&
+		g.ResponseDate.UnixMilli() == target.ResponseDate.UnixMilli()
+}

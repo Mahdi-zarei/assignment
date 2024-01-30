@@ -20,9 +20,7 @@ func NewGiftCardRepo(ctx context.Context, db *pgxpool.Pool) GiftCardRepo {
     giftee_id UUID NOT NULL,
     status INTEGER,
     issue_date TIMESTAMPTZ DEFAULT NOW(),
-    response_date TIMESTAMPTZ,
-    CONSTRAINT fk_gifter FOREIGN KEY(gifter_id) REFERENCES users(id),
-    CONSTRAINT fk_giftee FOREIGN KEY(giftee_id) REFERENCES users(id)
+    response_date TIMESTAMPTZ
 )`))
 
 	common.Must2(db.Exec(ctx, `CREATE INDEX IF NOT EXISTS status_idx ON gift_card(status)`))
@@ -35,7 +33,7 @@ func NewGiftCardRepo(ctx context.Context, db *pgxpool.Pool) GiftCardRepo {
 }
 
 func (g *GiftCardRepoImpl) InsertNew(ctx context.Context, giftData *types.GiftCardData) error {
-	_, err := g.db.Exec(ctx, "INSERT INTO gift_card(id, gifter_id, giftee_id, status, issue_date, response_date) VALUES($`,$2,$3,$4,$5,$6`)",
+	_, err := g.db.Exec(ctx, "INSERT INTO gift_card(id, gifter_id, giftee_id, status, issue_date, response_date) VALUES($1,$2,$3,$4,$5,$6)",
 		giftData.ID,
 		giftData.GifterID,
 		giftData.GifteeID,

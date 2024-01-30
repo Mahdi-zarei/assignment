@@ -6,6 +6,7 @@ import (
 	"assignment/db/users_repo"
 	"assignment/pkg/common"
 	"context"
+	"fmt"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -37,8 +38,8 @@ func NewServiceTest() *ServiceTest {
 }
 
 func (s *ServiceTest) cleanDBs() {
-	tableNames := []string{"gift_card", "user"}
+	tableNames := []string{"gift_card"}
 	for _, tableName := range tableNames {
-		common.Must2(s.dbConn.Exec(context.Background(), "TRUNCATE TABLE $1", tableName))
+		common.Must2(s.dbConn.Exec(context.Background(), fmt.Sprintf("TRUNCATE TABLE %s", tableName)))
 	}
 }
