@@ -9,3 +9,9 @@ type PaginationData struct {
 func (p *PaginationData) IsValid() bool {
 	return p.PageNumber >= 0 && p.PageSize >= 1
 }
+
+func (p *PaginationData) GetLimitAndOffset() (limit int32, offset int32) {
+	limit = p.PageSize
+	offset = p.PageNumber * p.PageSize
+	return
+}

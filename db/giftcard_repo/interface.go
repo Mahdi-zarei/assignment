@@ -13,9 +13,9 @@ import (
 type GiftCardRepo interface {
 	InsertNew(ctx context.Context, giftData *types.GiftCardData) error
 
-	UpdateGiftStatus(ctx context.Context, targetStatus types.GiftCardStatus) error
+	UpdateGiftStatus(ctx context.Context, giftID uuid.UUID, targetStatus types.GiftCardStatus) error
 
-	GetGiftData(ctx context.Context, ID uuid.UUID) (*types.GiftCardData, error)
+	GetGiftData(ctx context.Context, id uuid.UUID) (*types.GiftCardData, error)
 	GetGiftsByGifterID(ctx context.Context, gifterID uuid.UUID, paginationData db.PaginationData) ([]*types.GiftCardData, error)
 	GetGiftsByGifteeID(ctx context.Context, gifteeID uuid.UUID, paginationData db.PaginationData) ([]*types.GiftCardData, error)
 	GetGiftsByGifterIDAndStatus(ctx context.Context, gifterID uuid.UUID, wantedStatus types.GiftCardStatus, paginationData db.PaginationData) ([]*types.GiftCardData, error)
