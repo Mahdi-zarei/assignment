@@ -5,14 +5,14 @@ services:
     container_name: giftshop
     image: myapp
     depends_on:
-      db:
+      postgres:
         condition: service_started
     volumes:
       - ./config.yaml:/conf.yaml
     ports:
       - "8080:8080"
 
-  db:
+  postgres:
     image: postgres
     restart: always
     environment:
