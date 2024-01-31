@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  mainApp:
+    container_name: giftshop
+    image: myapp
+    depends_on:
+      db:
+        condition: service_started
+    volumes:
+      - ./config.yaml:/etc/config/conf.yaml
+    ports:
+      - "8080:8080"
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=dummypass
+      - POSTGRES_DB=giftshop
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+volumes:
+  db:
+    driver: local

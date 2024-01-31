@@ -1,0 +1,9 @@
+GiftShopPGXConf:
+  Host: "127.0.0.1"
+  Port: 5432
+  User: "postgres"
+  Password: "dummypass"
+  DBName: "giftshop"
+EndpointConf:
+  Host: "0.0.0.0"
+  Port: 8080
