@@ -12,3 +12,9 @@ type UserData struct {
 	Name         string    `json:"name"`
 	RegisterDate time.Time `json:"register_date"`
 }
+
+func (u *UserData) Equals(target UserData) bool {
+	return u.ID == target.ID &&
+		u.Name == target.Name &&
+		u.RegisterDate.UnixMilli() == target.RegisterDate.UnixMilli()
+}

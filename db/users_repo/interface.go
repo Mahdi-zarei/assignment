@@ -9,7 +9,7 @@ import (
 // UsersRepo defines the function scheme for users repository
 // since users and their management are not of concern here, we define a minimalistic db
 type UsersRepo interface {
-	InsertNew(ctx context.Context, userData types.UserData) error
+	InsertNew(ctx context.Context, userData *types.UserData) error
 
 	GetUserData(ctx context.Context, userID uuid.UUID) (*types.UserData, error)
 }

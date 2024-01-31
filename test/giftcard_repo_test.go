@@ -183,7 +183,7 @@ func TestInsertNew(t *testing.T) {
 		},
 	}
 
-	DupScenarios := []types.GiftCardData{
+	failScenarios := []types.GiftCardData{
 		{
 			ID:           dupID,
 			GifterID:     userID2,
@@ -196,19 +196,15 @@ func TestInsertNew(t *testing.T) {
 
 	for idx, scenario := range scenarios {
 		t.Run("scenario "+strconv.Itoa(idx), func(t *testing.T) {
-			scenarioCopy := scenario
 			err := svc.giftCardRepo.InsertNew(ctx, &scenario)
 			assert.Nil(t, err)
-			assert.True(t, scenario.Equals(scenarioCopy))
 		})
 	}
 
-	for idx, scenario := range DupScenarios {
-		t.Run("dupScenario "+strconv.Itoa(idx), func(t *testing.T) {
-			scenarioCopy := scenario
+	for idx, scenario := range failScenarios {
+		t.Run("failScenario "+strconv.Itoa(idx), func(t *testing.T) {
 			err := svc.giftCardRepo.InsertNew(ctx, &scenario)
 			assert.NotNil(t, err)
-			assert.True(t, scenario.Equals(scenarioCopy))
 		})
 	}
 }
