@@ -47,8 +47,15 @@ func (g *GiftCardRepoImpl) InsertNew(ctx context.Context, giftData *types.GiftCa
 	return nil
 }
 
-func (g *GiftCardRepoImpl) UpdateGiftStatus(ctx context.Context, giftID uuid.UUID, targetStatus types.GiftCardStatus) error {
-	res, err := g.db.Exec(ctx, "UPDATE gift_card SET status = $1 WHERE id = $2", targetStatus, giftID)
+func (g *GiftCardRepoImpl) UpdateGiftStatus(ctx context.Context, giftID uuid.UUID, targetStatus types.GiftCardStatus, setResponseDate bool) error {
+	query := ""
+	if setResponseDate {
+		query = "UPDATE gift_card SET status = $1, response_date=NOW() WHERE id = $2"
+	} else {
+		query = "UPDATE gift_card SET status = $1 WHERE id = $2"
+	}
+
+	res, err := g.db.Exec(ctx, query, targetStatus, giftID)
 	if err != nil {
 		return err
 	}

@@ -1,5 +1,11 @@
 package db
 
+// DefaultPagination can be used to retrieve the first 30 records
+var DefaultPagination = PaginationData{
+	PageNumber: 0,
+	PageSize:   30,
+}
+
 type PaginationData struct {
 	// PageNumber should start from 0
 	PageNumber int32 `json:"page_number"`

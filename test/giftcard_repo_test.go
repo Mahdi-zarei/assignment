@@ -235,7 +235,7 @@ func TestUpdateGiftStatus(t *testing.T) {
 	for idx, scenario := range scenarios {
 		t.Run("scenario "+strconv.Itoa(idx), func(t *testing.T) {
 			targetStatus := types.GiftCardStatusWaitingResponse
-			err := svc.giftCardRepo.UpdateGiftStatus(ctx, scenario.ID, targetStatus)
+			err := svc.giftCardRepo.UpdateGiftStatus(ctx, scenario.ID, targetStatus, false)
 			assert.Nil(t, err)
 
 			res, err := svc.giftCardRepo.GetGiftData(ctx, scenario.ID)
@@ -243,6 +243,14 @@ func TestUpdateGiftStatus(t *testing.T) {
 			assert.EqualValues(t, targetStatus, res.Status)
 		})
 	}
+
+	// check if response date gets updated properly
+	err := svc.giftCardRepo.UpdateGiftStatus(ctx, scenarios[0].ID, types.GiftCardStatusAccepted, true)
+	assert.Nil(t, err)
+
+	res, err := svc.giftCardRepo.GetGiftData(ctx, scenarios[0].ID)
+	assert.Nil(t, err)
+	assert.True(t, res.ResponseDate.After(time.Now().Add(-1*time.Minute)))
 }
 
 func TestGetGiftsByGifterID(t *testing.T) {

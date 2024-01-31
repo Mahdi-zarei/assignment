@@ -13,7 +13,7 @@ import (
 type GiftCardRepo interface {
 	InsertNew(ctx context.Context, giftData *types.GiftCardData) error
 
-	UpdateGiftStatus(ctx context.Context, giftID uuid.UUID, targetStatus types.GiftCardStatus) error
+	UpdateGiftStatus(ctx context.Context, giftID uuid.UUID, targetStatus types.GiftCardStatus, setResponseDate bool) error
 
 	GetGiftData(ctx context.Context, id uuid.UUID) (*types.GiftCardData, error)
 	GetGiftsByGifterID(ctx context.Context, gifterID uuid.UUID, paginationData db.PaginationData) ([]*types.GiftCardData, error)
