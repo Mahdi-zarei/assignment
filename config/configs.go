@@ -45,8 +45,8 @@ func GetConfig() *Config {
 	viper.SetConfigType("yaml")
 	common.Must1(viper.ReadConfig(bytes.NewReader([]byte(defaultConf))))
 	viper.SetConfigName("conf")
-	viper.AddConfigPath("/etc/config")
-	viper.AddConfigPath("")
+	viper.AddConfigPath("/etc/")
+	viper.AddConfigPath("/")
 
 	var conf Config
 	common.Must1(viper.Unmarshal(&conf))
