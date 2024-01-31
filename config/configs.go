@@ -47,6 +47,9 @@ func GetConfig() *Config {
 	viper.SetConfigName("conf")
 	viper.AddConfigPath("/etc/")
 	viper.AddConfigPath("/")
+	if err := viper.ReadInConfig(); err != nil {
+		fmt.Println("no config file found, using default")
+	}
 
 	var conf Config
 	common.Must1(viper.Unmarshal(&conf))
