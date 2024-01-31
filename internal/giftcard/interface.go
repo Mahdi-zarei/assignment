@@ -8,7 +8,7 @@ import (
 )
 
 type GiftCardModule interface {
-	IssueNewGiftCard(ctx context.Context, gifterID uuid.UUID, gifteeID uuid.UUID) (uuid.UUID, error)
+	IssueNewGiftCard(ctx context.Context, gifterID uuid.UUID, gifteeID uuid.UUID) (*types.GiftCardData, error)
 
 	RespondToGift(ctx context.Context, giftID uuid.UUID, targetStatus types.GiftCardStatus) error
 

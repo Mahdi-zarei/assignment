@@ -18,3 +18,11 @@ func MustGetVal[T any](val T, err error) T {
 	}
 	return val
 }
+
+func GetVal[T any](val T, _ any) T {
+	return val
+}
+
+func PtrTo[T any](obj T) *T {
+	return &obj
+}

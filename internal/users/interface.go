@@ -7,6 +7,6 @@ import (
 )
 
 type UsersModule interface {
-	RegisterNewUser(ctx context.Context, name string) (uuid.UUID, error)
+	RegisterNewUser(ctx context.Context, name string) (*types.UserData, error)
 	GetUserData(ctx context.Context, userID uuid.UUID) (*types.UserData, error)
 }

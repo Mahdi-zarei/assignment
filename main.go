@@ -1,20 +1,26 @@
 package main
 
 import (
+	"assignment/internal"
 	"context"
-	"github.com/jackc/pgx/v5"
+	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 )
 
 func main() {
-	db, err := pgx.Connect(context.Background(), "postgres://postgres:dummypass@5.34.202.174:5433/giftshop")
-	if err != nil {
-		panic(err)
-	}
+	ctx, cancel := context.WithCancel(context.Background())
+	svc := internal.Service{}
+	svc.Start(ctx)
 
-	err = db.Ping(context.Background())
-	if err != nil {
-		panic(err)
-	}
+	osSignals := make(chan os.Signal, 1)
+	signal.Notify(osSignals, os.Interrupt, syscall.SIGTERM)
+	<-osSignals
 
-	db.Close(context.Background())
+	fmt.Println("Signal received, shutting down gracefully...")
+	cancel()
+	time.Sleep(2 * time.Second)
+	svc.Close()
 }

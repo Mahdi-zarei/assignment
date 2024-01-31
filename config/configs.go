@@ -21,7 +21,7 @@ func (p *PostgresConf) GenerateConnectURL() string {
 
 type ListenConf struct {
 	Host string
-	Port string
+	Port int
 }
 
 type Config struct {

@@ -21,7 +21,7 @@ func NewUsersModule(repo users_repo.UsersRepo, logger *logrus.Logger) UsersModul
 	}
 }
 
-func (u *UsersModuleImpl) RegisterNewUser(ctx context.Context, name string) (uuid.UUID, error) {
+func (u *UsersModuleImpl) RegisterNewUser(ctx context.Context, name string) (*types.UserData, error) {
 	const spot = "RegisterNewUser"
 
 	userID := uuid.New()
@@ -34,10 +34,10 @@ func (u *UsersModuleImpl) RegisterNewUser(ctx context.Context, name string) (uui
 	err := u.usersRepo.InsertNew(ctx, &userData)
 	if err != nil {
 		u.logger.Errorf("[%s] Failed to insert new user: %s", spot, err)
-		return uuid.Nil, err
+		return nil, err
 	}
 
-	return userID, nil
+	return &userData, nil
 }
 
 func (u *UsersModuleImpl) GetUserData(ctx context.Context, userID uuid.UUID) (*types.UserData, error) {
