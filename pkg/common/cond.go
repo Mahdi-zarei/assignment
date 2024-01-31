@@ -26,3 +26,8 @@ func GetVal[T any](val T, _ any) T {
 func PtrTo[T any](obj T) *T {
 	return &obj
 }
+
+func DefaultVal[T any]() T {
+	var t T
+	return t
+}

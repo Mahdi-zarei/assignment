@@ -141,7 +141,11 @@ func (h *ApiHandler) InquireSentGifts(response http.ResponseWriter, request *htt
 		return
 	}
 
-	wantedStatus, _ := parseStatus(request.URL.Query().Get(WantedStatus)) // we are fine with nil status
+	wantedStatus, err := parseStatus(request.URL.Query().Get(WantedStatus)) // we are fine with nil status
+	if err != nil {
+		writeError(response, err, 400)
+		return
+	}
 
 	res, err := h.giftCardModule.GetListOfSentGiftCards(ctx, gifterID, wantedStatus, *paginationData)
 	if err != nil {
@@ -176,7 +180,11 @@ func (h *ApiHandler) InquireReceivedGifts(response http.ResponseWriter, request 
 		return
 	}
 
-	wantedStatus, _ := parseStatus(request.URL.Query().Get(WantedStatus)) // we are fine with nil status
+	wantedStatus, err := parseStatus(request.URL.Query().Get(WantedStatus)) // we are fine with nil status
+	if err != nil {
+		writeError(response, err, 400)
+		return
+	}
 
 	res, err := h.giftCardModule.GetListOfReceivedGiftCards(ctx, gifteeID, wantedStatus, *paginationData)
 	if err != nil {

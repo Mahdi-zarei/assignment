@@ -15,6 +15,8 @@ func writeError(response http.ResponseWriter, err error, status int) {
 
 func parseStatus(status string) (*types.GiftCardStatus, error) {
 	switch status {
+	case "":
+		return nil, nil
 	case UnknownStatus:
 		return common.PtrTo(types.GiftCardStatusUnknown), nil
 	case PendingStatus:
